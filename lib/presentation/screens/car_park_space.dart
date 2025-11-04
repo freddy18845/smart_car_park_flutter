@@ -311,6 +311,7 @@ class _CarParkSpaceScreenState extends State<CarParkSpaceScreen> {
                               // Parking list
                               Expanded(
                                 child: CarParkList(
+                                  isTracking: state.isTracking,
                                   carParks: result,
                                   selectedCarLot: selectedLot,
                                   selectedCarSpaceName: selectedCarSpace,

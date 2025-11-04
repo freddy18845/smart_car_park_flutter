@@ -19,6 +19,7 @@ class CarParkList extends StatefulWidget {
   final double latitude;
   final double longitude;
   final bool isAdminDashboard;
+  final bool? isTracking;
 
   const CarParkList({
     Key? key,
@@ -31,6 +32,7 @@ class CarParkList extends StatefulWidget {
     this.isAdminDashboard = false,
     required this.latitude,
     required this.longitude,
+     this.isTracking = false,
   }) : super(key: key);
 
   @override

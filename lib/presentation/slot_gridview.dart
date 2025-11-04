@@ -13,6 +13,7 @@ class CarSpaceGrid extends StatefulWidget {
   final String? selectedCarSpaceID;
   final bool isAdminDashboard;
   final OnSlotTap? onSlotTap;
+  final bool? isTracking;
 
   const CarSpaceGrid({
     Key? key,
@@ -21,6 +22,7 @@ class CarSpaceGrid extends StatefulWidget {
     this.selectedCarSpace,
     this.selectedCarSpaceID,
     this.isAdminDashboard = false,
+    this.isTracking = false,
     this.onSlotTap,
   }) : super(key: key);
 
@@ -53,6 +55,15 @@ class _CarSpaceGridState extends State<CarSpaceGrid> {
       );
       return;
     }
+    if(widget.isTracking == true){
+      showCustomSnackBar(
+        context: context,
+        message: ' Please wait For tracking to complete to proceed',
+        backgroundColor: Colors.redAccent,
+      );
+      return;
+    }
+
     if(carSpace['status']=="booked"
         && carSpace['current_user_id']== userData.id ) {
       StorageManager().setBookingStatus(true);

@@ -779,11 +779,11 @@ class _AdminSetupScreenState extends State<AdminSetupScreen> {
                       hint: "${spot.nameController.text} Directions*",
                       limit: 100),
                   const SizedBox(height: 12),
-                  CustomTextField(
-                      controller: spot.distanceController,
-                      hint: "Distance",
-                      limit: 200),
-                  const SizedBox(height: 12),
+                  // CustomTextField(
+                  //     controller: spot.distanceController,
+                  //     hint: "Distance",
+                  //     limit: 200),
+                  // const SizedBox(height: 12),
                   InkWell(
                     onTap: () async {
                       showCustomSnackBar(
@@ -899,22 +899,22 @@ class _AdminSetupScreenState extends State<AdminSetupScreen> {
                   });
                 },
               ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                      child: CustomTextField(
-                          controller: latController,
-                          hint: "Latitude",
-                          limit: 15)),
-                  const SizedBox(width: 8),
-                  Expanded(
-                      child: CustomTextField(
-                          controller: lngController,
-                          hint: "Longitude",
-                          limit: 15)),
-                ],
-              ),
+              // const SizedBox(height: 12),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //         child: CustomTextField(
+              //             controller: latController,
+              //             hint: "Latitude",
+              //             limit: 15)),
+              //     const SizedBox(width: 8),
+              //     Expanded(
+              //         child: CustomTextField(
+              //             controller: lngController,
+              //             hint: "Longitude",
+              //             limit: 15)),
+              //   ],
+              // ),
             ],
           ),
         ),
