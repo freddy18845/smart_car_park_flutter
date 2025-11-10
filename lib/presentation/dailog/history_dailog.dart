@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // for formatting
+import 'package:http/http.dart' as apiService;
+import 'package:intl/intl.dart';
+
+import '../../utils/constant.dart';
+import '../../utils/reservation_manager.dart'; // for formatting
 void showReservationDialog(BuildContext context, String userRole, Map<String, dynamic> reservationData) {
   showDialog(
     context: context,
@@ -49,7 +53,52 @@ void showReservationDialog(BuildContext context, String userRole, Map<String, dy
               const SizedBox(height: 20),
 
 
-              Align(
+              userRole.toLowerCase()!="operator" &&  reservationData["status"]=="booked"?   Align(
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  ElevatedButton(
+                    onPressed: () async {
+
+                      await ReservationManager.instance.updateReservationTime(
+                          timeDuration: 0,
+                          context: context,
+                          status: "cancelled"
+                      );
+                      Navigator.of(context).pop();},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF407BFF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text("Cancel Booking", style: TextStyle(color: Colors.white)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text("Close", style: TextStyle(color: Colors.white)),
+                  ),
+                  // InkWell(
+                  //   onTap: (){},
+                  //   child: btnNavigator(
+                  //     isActive: false,
+                  //     btnColor: const Color(0xFF407BFF),
+                  //     text: 'Cancel Booking',
+                  //
+                  //   ),
+                  // ),
+
+
+
+                ],),
+              ):Align(
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),

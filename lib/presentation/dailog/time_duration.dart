@@ -93,6 +93,7 @@ class TimeDurationDialog {
                     await ReservationManager.instance.updateReservationTime(
                       timeDuration: duration,
                       context: context,
+                      status: "occupied"
                     );
                   }
 

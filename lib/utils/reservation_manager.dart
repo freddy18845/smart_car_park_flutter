@@ -87,7 +87,7 @@ class ReservationManager {
 
       // At this point, response is already a Map<String, dynamic>
       print('Reservation Created: ${response['data']['id']}');
-
+      StorageManager().setCurrentReservationId('${response['data']['id']}');
       if (!isWithinRange) {
         final String token = StorageManager().userItem.token;
         // Optionally start background location updates here
@@ -121,6 +121,7 @@ class ReservationManager {
   Future<void> updateReservationTime({
     required int timeDuration,
     required BuildContext context,
+    required String status
   }) async {
     // Push start time 1 minute into the future to satisfy "after:now"
     final actualStartTime = DateTime.now().add(const Duration(minutes: 1));
@@ -132,7 +133,7 @@ class ReservationManager {
         // Update the reservation - FIXED: Use formattedEndTime string
         final response = await apiService.put('reservations/$reservationId', {
           "end_time": formattedEndTime,  // ← FIXED: Was endTime.formattedEndTime
-          "status": "occupied"
+          "status": status
         });
 
         if (response.statusCode == 200) {

@@ -80,60 +80,19 @@ class StorageManager {
     required String longitude,
   }) async {
     final prefs = await SharedPreferences.getInstance();
-    //
-    // currentReservationData = {
-    //   'reservationId': reservationId,
-    //   'endDate': endDate,
-    //   'latitude': latitude,
-    //   'longitude': longitude,
-    //   'createdAt': DateTime.now().toIso8601String(),
-    // };
+
 
     await prefs.setString(_keyReservationData, json.encode(currentReservationData));
   }
 
   int? getCurrentReservationId() => currentReservationData['reservationId'] as int?;
-  String? getCurrentReservationEndDate() => currentReservationData['endDate'] as String?;
-  String? getCurrentReservationLatitude() => currentReservationData['latitude'] as String?;
-  String? getCurrentReservationLongitude() => currentReservationData['longitude'] as String?;
   Map<String, dynamic> getCurrentReservationData() => Map<String, dynamic>.from(currentReservationData);
 
-  Future<void> checkCurrentReservationEndDate(BuildContext context) async {
-    final endDateString = getCurrentReservationEndDate();
-    final reservationId = getCurrentReservationId();
-
-    if (endDateString != null && reservationId != null) {
-      final now = DateTime.now();
-
-      try {
-        final endDateTime = DateTime.parse(endDateString);
-
-        if (endDateTime.isBefore(now)) {
-          await clearReservationData();
-        } else {
-          final timeRemaining = endDateTime.difference(now);
-          showCustomSnackBar(
-              context: context,
-              message: 'Reservation Remaining Time : ${timeRemaining.inMinutes} minutes'
-          );
-
-          final lat = getCurrentReservationLatitude();
-          final lng = getCurrentReservationLongitude();
-
-          if (lat != null && lng != null) {
-            GeolocatorManager().startTracking(
-              context,
-              targetLatitude: double.parse(lat),
-              targetLongitude: double.parse(lng),
-            );
-          }
-        }
-      } catch (e) {
-        print('Error parsing end date: $e');
-        await clearReservationData();
-      }
-    }
+  Future<void> setCurrentReservationId(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(currentReservationData['reservationId'], id);
   }
+
 
   Future<void> clearReservationData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -143,18 +102,7 @@ class StorageManager {
 
   bool hasActiveReservation() => getCurrentReservationId() != null;
 
-  bool isReservationExpired() {
-    final endDateString = getCurrentReservationEndDate();
-    if (endDateString == null) return false;
 
-    try {
-      final endDateTime = DateTime.parse(endDateString);
-      return endDateTime.isBefore(DateTime.now());
-    } catch (e) {
-      print('Error checking expiration: $e');
-      return true;
-    }
-  }
 
   Future<void> updateReservationEndDate(String newEndDate) async {
     if (hasActiveReservation()) {
@@ -214,11 +162,6 @@ class StorageManager {
     return {
       'hasActiveReservation': hasActiveReservation(),
       'reservationId': getCurrentReservationId(),
-      'endDate': getCurrentReservationEndDate(),
-      'latitude': getCurrentReservationLatitude(),
-      'longitude': getCurrentReservationLongitude(),
-      'isExpired': isReservationExpired(),
-      'fullData': getCurrentReservationData(),
     };
   }
 }

@@ -9,8 +9,8 @@ import '../presentation/screens/login.dart';
 import '../presentation/screens/setting_screen.dart';
 import '../presentation/screens/transaction_history.dart';
 
-//final String BASE_URL = "http://10.0.2.2:8000/api";
-final String BASE_URL = "http://192.168.116.8:8000/api";
+final String BASE_URL = "http://10.0.2.2:8000/api";
+// final String BASE_URL = "http://192.168.116.8:8000/api";
 //php artisan serve --host=0.0.0.0 --port=8000
 // php artisan schedule:work
 //
